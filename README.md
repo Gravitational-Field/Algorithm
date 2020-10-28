@@ -1,12 +1,8 @@
 # algorithm
-算法
+000
 
-![image-20201028203139036](https://cdn.jsdelivr.net/gh/lizhangjie316/img/2020/20201028203307.png)
+泰国
+新加坡
+里章节
+陈新茹
 
-
-
-
-
-是打发第三方
-
-史蒂芬
