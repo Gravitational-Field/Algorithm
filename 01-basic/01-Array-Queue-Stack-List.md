@@ -106,57 +106,6 @@ class Solution { //java实现
 }
 ```
 
-```python
-//python
-class Solution:
-    def maxArea(self, height: List[int]) -> int:
-        s1_index, s2_index, res = 0, len(height) - 1, 0
-        while s1_index < s2_index:
-            if height[s1_index] < height[s2_index]:
-                res = max(res, height[s1_index] * (s2_index - s1_index))
-                s1_index += 1
-            else:
-                res = max(res, height[s2_index] * (s2_index - s1_index))
-                s2_index -= 1
-        return res
-```
-
-```go
-// go
-func maxArea(height []int) int {
-	if len(height) == 0{
-		return 0
-	}
-	i := 0
-	j := len(height) - 1
-	ans := 0
-	for i < j{
-		area := min(height[i], height[j]) * (j - i)
-		ans = max(ans, area)
-		if height[i] <= height[j]{
-			i += 1
-		}else{
-			j -= 1
-		}
-	}
-	return ans
-}
-
-func min(a, b int) int{
-	if a < b{
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int{
-	if a > b{
-		return a
-	}
-	return b
-}
-```
-
 
 -  https://leetcode-cn.com/problems/move-zeroes/
 
@@ -183,66 +132,7 @@ class Solution {
 }
 ```
 
-```python
-// python 列表操作
-class Solution:
-    def moveZeroes(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        a1 = [] #   记录非0元素
-        a2 = [] #   记录为0的元素
-        for i in nums:  #   遍历list
-            if i == 0:
-                a2.append(i)    #   将为0的元素添加到a2
-            else:
-                a1.append(i)    #   将非0元素添加到a1
-        nums.clear()    #   清空原列表
-        nums.extend(a1 + a2)    #   将两个列表合并到nums中
-// 双指针法
-    def moveZeroes_1(self, nums):
-            """
-            :type nums: List[int]
-            :rtype: None Do not return anything, modify nums in-place instead.
-            """
-            if not nums:
-                return 0
-            # 第一次遍历的时候，j指针记录非0的个数，只要是非0的统统都赋给nums[j]
-            j = 0
-            for i in range(len(nums)):
-                if nums[i]:
-                    nums[j] = nums[i]
-                    j += 1
-            # 非0元素统计完了，剩下的都是0了
-            # 所以第二次遍历把末尾的元素都赋为0即可
-            for i in range(j,len(nums)):
-                nums[i] = 0
 
-```
-
-```go
-// go
-func moveZeroes(nums []int)  {
-	if len(nums) < 2 {
-		return
-	}
-
-	last := -1
-	for i, n := range nums {
-		if n == 0 && last == -1 {
-			last = i
-		}
-		if n != 0 && last != -1 {
-			nums[last], nums[i] = nums[i], nums[last]
-			last++
-		}
-	}
-}
-```
-
-```javascript
-//JavaScript
-```
 
 -  https://leetcode.com/problems/climbing-stairs/
 
@@ -281,25 +171,6 @@ class Solution:
             else: reslut[i] = reslut[i-1] + reslut[i-2]
         return reslut[-1]
 # python
-```
-
-```go
-// go
-func climbStairs(n int) int {
-    p := 0
-	q := 0
-	r := 1
-	for i := 1; i <= n; i++ {
-		p = q
-		q = r
-		r = p + q
-	}
-	return r
-}
-```
-
-```javascript
-//JavaScript
 ```
 
 -  [https://leetcode-cn.com/problems/two-sum/](https://leetcode-cn.com/problems/two-sum/)  (两数之和)
@@ -347,39 +218,6 @@ class Solution3 { //66ms 39.9M
     }
 }
 ```
-
-```python
-# python
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        hashmap = {}
-        for ind, num in enumerate(nums):    # 生成字典
-            hashmap[num] = ind
-
-        for i, num in enumerate(nums):
-            j = hashmap.get(target - num)  # 获取指定键值
-            if j is not None and i != j and i < j:  # 如果j不为空且i和j不相等且i小于j
-                return [i, j]   # 返回和为target的索引
-```
-
-```go
-// go
-func twoSum(nums []int, target int) []int {
-	m := make(map[int]int)
-	for i, v := range nums {
-		if j, ok := m[target - v]; ok && i != j {
-			return []int{i, j}
-		}
-		m[v] = i
-	}
-	return []int{}
-}
-```
-
-```javascript
-//JavaScript
-```
-
 -  [https://leetcode-cn.com/problems/3sum/ ](https://leetcode-cn.com/problems/3sum/)(高频老题） 
 
 ```java
@@ -448,109 +286,6 @@ class Solution4 {
 }
 ```
 
-```python
-# python
-class Solution:
-    '''
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        
-        # 基于两数之和改编的方法，会超出限制。
-        # :param nums:
-        # :return:
-        
-        nums.sort()  # 排序
-        hashmap = {}
-        for ind, num in enumerate(nums):  # 生成字典
-            hashmap[num] = ind
-        result = []
-        for i, num in enumerate(nums):
-            for j, num1 in enumerate(nums):
-                k = hashmap.get(0 - num - num1)  # 获取指定键值
-                if k is not None and i != j and i < j and i != k and j != k and j < k:  # 如果j不为空且i和j不相等且i小于j
-                    cur_res = [num, num1, nums[k]]
-                    if cur_res not in result:
-                        result.append(cur_res)  # 返回和为target的索引
-                    else:
-                        pass
-        return result
-        '''
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        if len(nums) < 3:   #   当nums中元素小于3时，直接返回空值。
-            return []
-        '''先对数组排序, 遍历数组遇到与前一个元素相同的情况可直接跳过'''
-        nums.sort()
-        curr_hash = {-x: i for i, x in enumerate(nums)}
-        res = []
-        res_hash = {}
-        for i, first in enumerate(nums):
-            '''当前元素与前一个元素相同时, 可直接跳过以优化性能'''
-            if i > 0 and first == nums[i - 1]:
-                continue
-            for j, second in enumerate(nums[i + 1:]):
-                '''检查两数之和是否存在于哈希表中'''
-                if first + second in curr_hash:
-                    curr_index = curr_hash[first + second]
-                    if curr_index == i or curr_index == i + j + 1:
-                        continue
-                    '''将找到的结果存入另一个哈希表中, 避免包含重复结果'''
-                    row = sorted([first, second, nums[curr_index]])
-                    key = ",".join([str(x) for x in row])
-                    if key not in res_hash:
-                        res.append(row)
-                        res_hash[key] = True
-        return res
-
-```
-
-```go
-// go
-import "sort"
-
-func threeSum(nums []int) [][]int {
-	length := len(nums)
-	if length < 3 {
-		return nil
-	}
-	sort.Ints(nums)
-
-	result := [][]int{}
-	for i := 0; i < length-2; i++ {
-		for i != 0 && nums[i] == nums[i-1] && i < length-2 {
-			i++
-		}
-		target := 0 - nums[i]
-		l := i + 1
-		r := length - 1
-		for l < r {
-			if nums[l]+nums[r] == target {
-				result = append(result, []int{nums[i], nums[l], nums[r]})
-				l++
-				r--
-				for nums[l] == nums[l-1] && nums[r] == nums[r+1] && l < r {
-					l++
-					r--
-				}
-			} else if nums[l]+nums[r] < target {
-				l++
-				for nums[l] == nums[l-1] && l < r {
-					l++
-				}
-			} else {
-				r--
-				for nums[r] == nums[r+1] && l < r {
-					r--
-				}
-			}
-		}
-	}
-	return result
-}
-
-```
-
-```javascript
-//JavaScript
-```
 
 
 
@@ -577,47 +312,6 @@ class Solution {//画个图就出来了
 //递归的方式
 ```
 
-```python
-#python
-
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
-
-class Solution:
-    def reverseList(self, head: ListNode) -> ListNode:
-        pre = None
-        cur = head
-        while cur:
-            temp = cur.next   # 先把原来cur.next位置存起来
-            cur.next = pre
-            pre = cur
-            cur = temp
-        return pre
-```
-
-
-```go
-//go
-func reverseList(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
-	}
-	slow, fast := head, head.Next
-	for fast != nil {
-		tmp := fast.Next
-		fast.Next = slow
-		slow = fast
-		fast = tmp
-	}
-	head.Next = nil
-	return slow
-}
-
-```
-
 · https://leetcode.com/problems/swap-nodes-in-pairs
 
 ```java
@@ -636,48 +330,6 @@ class Solution {
         }
         return pre.next;
     }
-}
-```
-
-```python
-#python
-class Solution:
-    def swapPairs(self, head: ListNode) -> ListNode:
-        pre = ListNode(-1)
-        pre.next = head
-        c = pre
-        while c.next and c.next.next:
-            a, b = c.next, c.next.next
-            c.next, a.next = b, b.next
-            b.next = a
-            c = c.next.next
-        return pre.next
-```
-
-
-```go
-//go
-func swapPairs(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil{
-		return head
-	}
-	newHead := &ListNode{}
-	newHead.Next = head
-	h := newHead
-	p := head
-	q := head.Next
-	for q != nil{
-		p.Next = q.Next
-		q.Next = p
-		h.Next = q
-		h = p
-		p = p.Next
-		if p == nil{
-			break
-		}
-		q = p.Next
-	}
-	return newHead.Next
 }
 ```
 
@@ -703,57 +355,6 @@ public class Solution {
 }
 ```
 
-```python
-#   python
-class Solution:
-    def hasCycle(self, head):
-        '''
-        使用set
-        '''
-        # 定义一个set，然后不断遍历链表
-        s = set()
-        while head:
-            # 如果某个节点在set中，说明遍历到重复元素了，也就是有环
-            if head in s:
-                return True
-            s.add(head)
-            head = head.next
-        return False
-    
-    def hasCycle(self, head):
-            """
-            快慢指针方法
-            :type head: ListNode
-            :rtype: bool
-            """
-            i1 = i2 = head
-            while i1 and i1.next:
-                i1 = i1.next.next
-                i2 = i2.next
-                if i2 == i1:
-                    return True
-            return False    
-```
-
-```go
-//go
-func hasCycle(head *ListNode) bool {
-	if head == nil{
-		return false
-	}
-	slow := head
-	fast := head.Next
-	for fast != nil && fast.Next != nil{
-		if slow == fast{
-			return true
-		}
-		slow = slow.Next
-		fast = fast.Next.Next
-	}
-	return false
-}
-```
-
 · https://leetcode.com/problems/linked-list-cycle-ii
 
 ```java
@@ -773,68 +374,6 @@ class Solution2 {
         }
         return fast;
     }
-}
-```
-
-```python
-#python
-class Solution(object):
-    def detectCycle(self, head):
-        """
-        :type head: ListNode
-        :rtype: bool
-        """
-        node1 = head  # 走一步
-        node2 = head  # 走两步
-        p = head
-
-        while node1 and node2 and node1.next and node2.next and node2.next.next:    #   将为空的情况全部列举出来
-            node1 = node1.next
-            node2 = node2.next.next
-            if node1 == node2:
-                p = head    #   p指向链表头，这里用node2也可以，此处便于分清
-                while node1 is not p:   #   当 快指针走到f = af=a 步时，慢指针走到步s = a+nbs=a+nb，此时 两指针重合，并同时指向链表环入口 。
-                    p = p.next  #   p指向下一个节点 
-                    node1 = node1.next  #   node1向下走一个
-                return p
-        return None
-
-    def detectCycle(self, head):
-        # 定义一个set，然后不断遍历链表
-        s = set()
-        while head:
-            # 如果某个节点在set中，说明遍历到重复元素了，也就是有环
-            if head in s:
-                return head
-            s.add(head)
-            head = head.next
-        return None
-```
-
-```go
-//go
-func detectCycle(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return nil
-	}
-	slow, fast := head, head
-
-	for fast != nil && fast.Next != nil {
-		slow = slow.Next
-		fast = fast.Next.Next
-		if slow == fast {
-			break
-		}
-	}
-	if fast == nil || fast.Next == nil {
-		return nil
-	}
-	tmp := head
-	for tmp != slow {
-		tmp = tmp.Next
-		slow = slow.Next
-	}
-	return slow
 }
 ```
 
@@ -883,85 +422,6 @@ class Solution21 {
 }
 ```
 
-```python
-class Solution(object):
-    def reverseList(self, head: ListNode) -> ListNode:
-        pre = None
-        cur = head
-        while cur:
-            temp = cur.next  # 先把原来cur.next位置存起来
-            cur.next = pre
-            pre = cur
-            cur = temp
-        return pre
-
-    def reverseKGroup(self, head, k):
-        """
-        :type head: ListNode
-        :type k: int
-        :rtype: ListNode
-        """
-        tep = ListNode(0)
-        tep.next = head
-
-        pre1 = tep
-        end1 = tep
-        while end1.next is not None:    #   循环条件下一个不为空
-            start = pre1.next
-            i = 0
-            while i < k and end1 is not None:   #   根据k的大小设定每次反转个数
-                end1 = end1.next
-                i += 1
-            if end1 is None:    #   当end1不为None时继续，否则退出
-                break
-            endNext = end1.next
-            end1.next = None
-            pre1.next = self.reverseList(start) #   进行反转
-
-            start.next = endNext
-            pre1 = start
-            end1 = start
-
-        return tep.next
-```
-
-```go
-//go
-func reverseKGroup(head *ListNode, k int) *ListNode {
-	hair := &ListNode{Next: head}
-	pre := hair
-
-	for head != nil {
-		tail := pre
-		for i := 0; i < k; i++ {
-			tail = tail.Next
-			if tail == nil {
-				return hair.Next
-			}
-		}
-		nex := tail.Next
-		head, tail = myReverse(head, tail)
-		pre.Next = head
-		tail.Next = nex
-		pre = tail
-		head = tail.Next
-	}
-	return hair.Next
-}
-
-func myReverse(head, tail *ListNode) (*ListNode, *ListNode) {
-	prev := tail.Next
-	p := head
-	for prev != tail {
-		nex := p.Next
-		p.Next = prev
-		prev = p
-		p = nex
-	}
-	return tail, head
-}
-```
-
 # 4. 课后作业
 
 · https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/
@@ -1004,28 +464,6 @@ class Solution11 {
 }
 ```
 
-
-
-```python
-#python
-```
-
-
-
-```go
-//go
-location := 1
-    ll := len(nums)
-    for i := 1;i < ll; i++ {
-        if nums[i] == nums[i - 1]{
-            continue
-        } 
-        nums[location] = nums[i]
-        location++
-    }
-    return location
-```
-
 · https://leetcode-cn.com/problems/rotate-array/
 
 ```java
@@ -1051,31 +489,6 @@ class Solution20 {
         nums[0] = tmp;
         return nums;
     }
-}
-```
-
-
-
-```go
-//go
-func rotate(nums []int, k int)  {
-	if nums == nil || len(nums) == 0{
-		return
-	}
-	length := len(nums)
-	k %= k % length
-	reverse(nums, 0, length - k - 1)
-	
-	reverse(nums, length - k - 1, length - 1)
-	reverse(nums, 0 , length - 1)
-}
-
-func reverse(nums []int, i, j int){
-	for i < j{
-		nums[i], nums[j] = nums[j], nums[i]
-		i++
-		j--
-	}
 }
 ```
 
@@ -1137,31 +550,6 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 ```
 
 
-```go
-//go
-func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
-    head := &ListNode{}
-	
-	p := head
-	for l1 != nil && l2 != nil{
-		if l1.Val <= l2.Val{
-			p.Next = l1
-			l1 = l1.Next
-		}else{
-			p.Next = l2
-			l2 = l2.Next
-		}
-		p = p.Next
-	}
-	if l1 == nil{
-		p.Next = l2
-	}else{
-		p.Next = l1
-	}
-	return head.Next
-}
-```
-
 · https://leetcode-cn.com/problems/merge-sorted-array/
 
 ```java
@@ -1217,27 +605,6 @@ public static void merge3(int[] nums1, int m, int[] nums2, int n) {
 }
 ```
 
-
-
-```go
-//go
-func merge(nums1 []int, m int, nums2 []int, n int) {
-	k := m + n
-	for i := k - 1; i >= 0; i-- {
-		if n == 0 {
-			break
-		}
-		if m > 0 && nums1[m-1] > nums2[n-1] {
-			nums1[i] = nums1[m-1]
-			m--
-		} else {
-			nums1[i] = nums2[n-1]
-			n--
-		}
-	}
-}
-```
-
 · https://leetcode-cn.com/problems/plus-one/
 
 ```java
@@ -1255,30 +622,6 @@ public int[] plusOne(int[] digits) {
 }
 ```
 
-```go
-//go
-func plusOne(digits []int) []int {
-	if digits == nil {
-		return digits
-	}
-	i := len(digits) - 1
-	digits[i] += 1
-	i--
-	for ; i >= 0; i-- {
-		if digits[i + 1] > 9 {
-			digits[i + 1] %= 10
-			digits[i] += 1
-		} else {
-			break
-		}
-	}
-	if digits[0] > 9{
-		digits[0] %= 10
-		digits = append([]int{1}, digits...)
-	}
-	return digits
-}
-```
 
 # 5. 栈、队列、优先队列、双端队列预习题目
 
@@ -1305,70 +648,9 @@ public static boolean isValid(String s) {
 }
 ```
 
-```go
-//go
-func isValid(s string) bool {
-	hash := map[byte]byte{')':'(', ']':'[', '}':'{'}
-	stack := make([]byte, 0)
-	if s == "" {
-		return true
-	}
-
-	for i := 0; i < len(s); i++ {
-		if s[i] == '(' || s[i] == '[' || s[i] == '{' {
-			stack = append(stack, s[i])
-		} else if len(stack) > 0 && stack[len(stack)-1] == hash[s[i]] {
-			stack = stack[:len(stack)-1]
-		} else {
-			return false
-		}
-	}
-	return len(stack) == 0
-}
-```
-
 · https://leetcode-cn.com/problems/min-stack/
 
-```go
-type MinStack struct {
-	stack []int
-	minStack []int
-}
 
-/** initialize your data structure here. */
-func ConstructorStack() MinStack {
-	return MinStack{
-		stack: []int{},
-		minStack: []int{math.MaxInt64},
-	}
-}
-
-func (this *MinStack) Push(x int)  {
-	this.stack = append(this.stack, x)
-	top := this.minStack[len(this.minStack)-1]
-	this.minStack = append(this.minStack, min(x, top))
-}
-
-func (this *MinStack) Pop()  {
-	this.stack = this.stack[:len(this.stack)-1]
-	this.minStack = this.minStack[:len(this.minStack)-1]
-}
-
-func (this *MinStack) Top() int {
-	return this.stack[len(this.stack)-1]
-}
-
-func (this *MinStack) GetMin() int {
-	return this.minStack[len(this.minStack)-1]
-}
-
-func min(x, y int) int {
-	if x < y {
-		return x
-	}
-	return y
-}
-```
 
 # 6. 实战题目
 
@@ -1474,7 +756,7 @@ func (this *MyCircularDeque) IsFull() bool {
 
 # 8. 哈希表、映射、集合
 
-•	https://leetcode-cn.com/problems/valid-anagram/description/
+​	https://leetcode-cn.com/problems/valid-anagram/description/
 
 ```go
 func isAnagram(s string, t string) bool {
@@ -1506,4 +788,4 @@ func makewordtable(wordtable *[26]int, s string) {
 }
 ```
 
-•	https://leetcode-cn.com/problems/group-anagrams/
+​	https://leetcode-cn.com/problems/group-anagrams/
