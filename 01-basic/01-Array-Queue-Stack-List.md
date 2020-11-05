@@ -648,7 +648,46 @@ public static boolean isValid(String s) {
 }
 ```
 
-· https://leetcode-cn.com/problems/min-stack/
+- #### [155. 最小栈](https://leetcode-cn.com/problems/min-stack/)    [题解1](https://leetcode-cn.com/problems/min-stack/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-38/)  [题解2](https://leetcode-cn.com/problems/min-stack/solution/zui-yi-dong-yi-ge-zhan-tong-shi-bao-cun-dang-qian-/)
+
+```java
+public class MinStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+
+    /** initialize your data structure here. */
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+
+    public void push(int x) {
+        stack.push(x);
+        if (!minStack.isEmpty()) {
+            if (x <= minStack.peek()) {  //这里存在一个便捷问题，是<还是<=   考虑两个最小值顺序push，minStack只记录一次
+                minStack.push(x);  //若取<,则在pop时，pop==min，对minStack需要pop，则min与stack会出现不一致情况。
+            }
+        }else {
+            minStack.push(x);
+        }
+    }
+
+    public void pop() {
+        int pop = stack.pop();
+        if (pop == minStack.peek()) {
+            minStack.pop();
+        }
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return minStack.peek();
+    }
+}
+```
 
 
 
@@ -666,89 +705,7 @@ public static boolean isValid(String s) {
 
 · https://leetcode.com/problems/design-circular-deque
 
-```go
 
-type MyCircularDeque struct {
-	capacity   int
-	data       []int
-	head, tail int
-}
-
-/** Initialize your data structure here. Set the size of the deque to be k. */
-func Constructor(k int) MyCircularDeque {
-	return MyCircularDeque{
-		capacity: k + 1,
-		data:     make([]int, k+1),
-		head:     0,
-		tail:     0,
-	}
-}
-
-/** Adds an item at the front of Deque. Return true if the operation is successful. */
-func (this *MyCircularDeque) InsertFront(value int) bool {
-	if this.IsFull() {
-		return false
-	}
-	this.head = (this.head - 1 + this.capacity) % this.capacity
-	this.data[this.head] = value
-
-	return true
-}
-
-/** Adds an item at the rear of Deque. Return true if the operation is successful. */
-func (this *MyCircularDeque) InsertLast(value int) bool {
-	if this.IsFull() {
-		return false
-	}
-	this.data[this.tail] = value
-	this.tail = (this.tail + 1) % this.capacity
-	return true
-}
-
-/** Deletes an item from the front of Deque. Return true if the operation is successful. */
-func (this *MyCircularDeque) DeleteFront() bool {
-	if this.IsEmpty() {
-		return false
-	}
-	this.head = (this.head + 1) % this.capacity
-	return true
-}
-
-/** Deletes an item from the rear of Deque. Return true if the operation is successful. */
-func (this *MyCircularDeque) DeleteLast() bool {
-	if this.IsEmpty() {
-		return false
-	}
-	this.tail = (this.tail - 1 + this.capacity) % this.capacity
-	return true
-}
-
-/** Get the front item from the deque. */
-func (this *MyCircularDeque) GetFront() int {
-	if this.IsEmpty() {
-		return -1
-	}
-	return this.data[this.head]
-}
-
-/** Get the last item from the deque. */
-func (this *MyCircularDeque) GetRear() int {
-	if this.IsEmpty() {
-		return -1
-	}
-	return this.data[(this.tail-1+this.capacity)%this.capacity]
-}
-
-/** Checks whether the circular deque is empty or not. */
-func (this *MyCircularDeque) IsEmpty() bool {
-	return this.head == this.tail
-}
-
-/** Checks whether the circular deque is full or not. */
-func (this *MyCircularDeque) IsFull() bool {
-	return (this.tail+1)%this.capacity == this.head
-}
-```
 
 · https://leetcode.com/problems/trapping-rain-water/
 
@@ -758,34 +715,6 @@ func (this *MyCircularDeque) IsFull() bool {
 
 ​	https://leetcode-cn.com/problems/valid-anagram/description/
 
-```go
-func isAnagram(s string, t string) bool {
-	if len(s) != len(t){
-		return false
-	}
-	var wg sync.WaitGroup
-	var wordstable_s =  [26]int{}
-	var wordstable_t =  [26]int{}
-	wg.Add(2)
-	go func(){
-		makewordtable(&wordstable_s,s)
-		wg.Done()
-	}()
-	go func(){
-		makewordtable(&wordstable_t,t)
-		wg.Done()
-	}()
-	wg.Wait()
-	return wordstable_s == wordstable_t
 
-}
-
-func makewordtable(wordtable *[26]int, s string) {
-	for i:=0;i<len(s);i++{
-		index := s[i] - 'a'
-		wordtable[index] ++
-	}
-}
-```
 
 ​	https://leetcode-cn.com/problems/group-anagrams/

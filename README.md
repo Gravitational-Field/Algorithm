@@ -2,7 +2,6 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [LetCode](#letcode)
 - [刷题思路](#%E5%88%B7%E9%A2%98%E6%80%9D%E8%B7%AF)
 - [第01课|刷题顺序](#%E7%AC%AC01%E8%AF%BE%E5%88%B7%E9%A2%98%E9%A1%BA%E5%BA%8F)
 - [第02课丨Array](#%E7%AC%AC02%E8%AF%BE%E4%B8%A8array)
