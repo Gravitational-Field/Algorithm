@@ -13,8 +13,8 @@ public class Test {
         String[] nodes = data.split(",");
         System.out.println(deserialize(data));
         LinkedList<String> list = new LinkedList();
-        list.add
-        new LinkedBlockingDeque<>()
+//        list.add
+//        new LinkedBlockingDeque<>()
     }
 
     public TreeNode deserialize(String data) {
